@@ -13,8 +13,8 @@ export default {
   default_admin_pass: process.env.DEFAULT_ADMIN_PASS,
   bycrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
   jwt: {
-    secret: process.env.JWT_SECRET,
-    refresh_secret: process.env.JWT_REFRESH_SECRET,
+    secret: process.env.JWT_SECRET || 'booking-secret',
+    refresh_secret: process.env.JWT_REFRESH_SECRET || 'booking-secret',    
     expires_in: process.env.JWT_EXPIRES_IN,
     refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
   },

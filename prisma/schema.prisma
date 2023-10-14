@@ -15,28 +15,10 @@ datasource db {
 
 
 model User {
-  id       Int      @id @default(autoincrement())
-  name     String
-  email    String   @unique
-  posts    Post[]
-  comments Comment[]
-}
-
-model Post {
-  id        Int       @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean   @default(false)
-  authorId  Int
-  author    User      @relation(fields: [authorId], references: [id])
-  comments  Comment[]
-}
-
-model Comment {
-  id      Int    @id @default(autoincrement())
-  text    String
-  postId  Int
-  post    Post   @relation(fields: [postId], references: [id])
-  authorId Int
-  author  User   @relation(fields: [authorId], references: [id])
+  id                String   @id @default(uuid()) @db.Uuid
+  email             String   @unique
+  password          String
+  needsPasswordChange Boolean @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
