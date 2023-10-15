@@ -43,18 +43,32 @@ model Profile {
 
 
 model Service {
-    id          String          @id @default(uuid())
-    name        String
-    description String
-    price       Int
-    categoryId  String
-    category    ServiceCategory @relation(fields: [categoryId], references: [id])
-    reviews     Review[]
-    bookings    Booking[]
-    cartItems   CartItem[]
-    availabilities Availability[]
+    id               String          @id @default(uuid())
+    name             String?
+    description      String?
+    pricePerHour     Int
+    brand            String
+    model            String
+    fuelType         FuelType
+    transmission     Transmission
+    seatingCapacity  Int
+    images           Image[]
+    categoryId       String
+    category         ServiceCategory @relation(fields: [categoryId], references: [id])
+    reviews          Review[]
+    bookings         Booking[]
+    cartItems        CartItem[]
+    availabilities   Availability[]
 }
 
+model Image {
+    id          String   @id @default(uuid())
+    serviceId   String
+    service     Service  @relation(fields: [serviceId], references: [id])
+    filePath    String   // Path to where the image is stored
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
 model ServiceCategory {
     id       String    @id @default(uuid())
     name     String
@@ -139,6 +153,18 @@ model Notification {
     createdAt DateTime @default(now())
 }
 
+
+enum FuelType {
+    DIESEL
+    PETROL
+    ELECTRIC
+    HYBRID
+}
+
+enum Transmission {
+    MANUAL
+    AUTOMATIC
+}
 
 enum UserRole {
     user
