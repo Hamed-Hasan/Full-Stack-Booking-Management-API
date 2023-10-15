@@ -48,13 +48,15 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   const accessToken = jwtHelpers.createToken(
     { userId: user.id },
     config.jwt.secret as Secret,
-    config.jwt.expires_in as string
+    config.jwt.expires_in as string,
+    user.role  // Pass the user's role here
   );
 
   const refreshToken = jwtHelpers.createToken(
     { userId: user.id },
     config.jwt.refresh_secret as Secret,
-    config.jwt.refresh_expires_in as string
+    config.jwt.refresh_expires_in as string,
+    user.role  // Pass the user's role here
   );
 
   return {
@@ -79,11 +81,13 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
   }
+  console.log(user.role);
 
   const newAccessToken = jwtHelpers.createToken(
     { userId: user.id },
     config.jwt.secret as Secret,
-    config.jwt.expires_in as string
+    config.jwt.expires_in as string,
+    user.role 
   );
 
   return {

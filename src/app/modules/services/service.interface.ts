@@ -8,8 +8,8 @@ export type IService = {
   pricePerHour: number;
   brand: string;
   model: string;
-  fuelType?: FuelType | null;
-  transmission?: Transmission | null;
+  fuelType?: FuelType | null | string;
+  transmission?: Transmission | null | string;  
   seatingCapacity: number;
   images?: IImage[];
   categoryId: string;

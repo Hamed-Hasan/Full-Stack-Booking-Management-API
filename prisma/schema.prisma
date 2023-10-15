@@ -49,11 +49,13 @@ model Service {
     pricePerHour     Int
     brand            String
     model            String
-    // fuelType         FuelType?       @default(PETROL)
-    // transmission     Transmission?   @default(AUTOMATIC)
+    fuelType         String?
+    transmission     String?
     seatingCapacity  Int
-    images           Image[]
     categoryId       String
+    createdAt                  DateTime                    @default(now())
+    updatedAt                  DateTime                    @updatedAt
+    images           Image[]
     category         ServiceCategory @relation(fields: [categoryId], references: [id])
     reviews          Review[]
     bookings         Booking[]
@@ -154,17 +156,17 @@ model Notification {
 }
 
 
-enum FuelType {
-    DIESEL
-    PETROL
-    ELECTRIC
-    HYBRID
-}
+// enum FuelType {
+//     DIESEL
+//     PETROL
+//     ELECTRIC
+//     HYBRID
+// }
 
-enum Transmission {
-    MANUAL
-    AUTOMATIC
-}
+// enum Transmission {
+//     MANUAL
+//     AUTOMATIC
+// }
 
 enum UserRole {
     user

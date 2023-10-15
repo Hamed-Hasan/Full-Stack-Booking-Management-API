@@ -4,6 +4,8 @@ import multer from 'multer';
 import validateRequest from '../../middlewares/validateRequest';
 import { ServiceValidation } from './service.validation';
 import { ServiceController } from './service.controller';
+import auth from '../../middlewares/auth';
+import { ENUM_USER_ROLE } from '../../../enums/user';
 
 
 const upload = multer({ dest: 'uploads/' });
@@ -12,6 +14,10 @@ const router = express.Router();
 
 router.post(
     '/create-services',
+    auth(
+      ENUM_USER_ROLE.ADMIN,
+      ENUM_USER_ROLE.SUPER_ADMIN,
+      ),
     upload.single('file'),  
     ServiceController.createService
   );
@@ -33,7 +39,7 @@ router.delete(
 );
 
 router.get(
-'/', ServiceController.listServices
+'/', ServiceController.listAllServices
 );
 
 export const ServiceRoutes = router;

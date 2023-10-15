@@ -5,14 +5,24 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { IService } from './service.interface';
 import config from '../../../config';
+import pick from '../../../shared/pick';
+import { ServiceFilterableFields, ServiceSearchableFields } from './service.constant';
+
+
+
+const listAllServices = catchAsync(async (req: Request, res: Response) => {
+  const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
+  const filters = pick(req.query, [...ServiceSearchableFields, ...ServiceFilterableFields, 'searchTerm']);
+
+  const result = await ServiceService.listAllServices(options, filters);
+  sendResponse(res, { statusCode: 200, success: true, meta: result.meta, data: result.data });
+});
+
 
 
 const createService = catchAsync(async (req: Request, res: Response) => {
-    // Parse the JSON string to an object
     const serviceData: IService = JSON.parse(req.body.data);
-  
     if (req.file) {
-      // If file is provided, upload it to Cloudinary
       const uploadResult = await config.cloudinary.uploader.upload(req.file.path);
       serviceData.images = [{ filePath: uploadResult.secure_url }];
     }
@@ -38,16 +48,11 @@ const createService = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, { statusCode: 200, success: true, data: service });
   });
   
-  const listServices = catchAsync(async (_req: Request, res: Response) => {
-    const services = await ServiceService.listServices();
-    sendResponse(res, { statusCode: 200, success: true, data: services });
-  });
 
 export const ServiceController = {
   createService,
-//   uploadImage,
   getService,
   updateService,
   deleteService,
-  listServices,
+  listAllServices,
 };
