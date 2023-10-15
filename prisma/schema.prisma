@@ -23,3 +23,20 @@ model User {
     notifications  Notification[] 
     profile        Profile?
 }
+
+model Profile {
+    id             String    @id @default(uuid())
+    userId         String    @unique
+    user           User      @relation(fields: [userId], references: [id])
+    username       String?    @unique
+    firstName      String?   
+    lastName       String?   
+    dateOfBirth    DateTime?
+    phoneNumber    String?   
+    address        String?  
+    bio            String?  
+    profileImage   String?   
+    createdAt      DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt 
+}
+
