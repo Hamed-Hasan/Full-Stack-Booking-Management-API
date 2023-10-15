@@ -180,10 +180,18 @@ enum BookingStatus {
     cancelled
 }
 
+// enum RatingValue {
+//     rating_one
+//     rating_two
+//     rating_three
+//     rating_four
+//     rating_five
+// }
+
 enum RatingValue {
-    RATING_ONE
-    RATING_TWO
-    RATING_THREE
-    RATING_FOUR
-    RATING_FIVE
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
 }
