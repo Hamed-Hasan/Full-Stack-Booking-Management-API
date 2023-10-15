@@ -139,3 +139,22 @@ model Notification {
 }
 
 
+enum UserRole {
+    user
+    admin
+    superAdmin
+}
+
+enum BookingStatus {
+    pending
+    confirmed
+    cancelled
+}
+
+enum RatingValue {
+    RATING_ONE
+    RATING_TWO
+    RATING_THREE
+    RATING_FOUR
+    RATING_FIVE
+}
