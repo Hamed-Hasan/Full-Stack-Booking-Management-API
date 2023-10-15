@@ -79,3 +79,24 @@ model Review {
     review    String
     rating    RatingValue
 }
+
+model CartItem {
+    id        String  @id @default(uuid())
+    userId    String
+    user      User    @relation(fields: [userId], references: [id])
+    serviceId String
+    service   Service @relation(fields: [serviceId], references: [id])
+    quantity  Int
+}
+
+model Availability {
+    id         String    @id @default(uuid())
+    serviceId  String
+    service    Service   @relation(fields: [serviceId], references: [id])
+    startDate  DateTime
+    endDate    DateTime
+    startTime  String
+    endTime    String
+    daysOfWeek Json
+}
+
