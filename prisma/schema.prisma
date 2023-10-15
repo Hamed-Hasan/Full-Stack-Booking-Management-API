@@ -53,3 +53,20 @@ model Service {
     cartItems   CartItem[]
     availabilities Availability[]
 }
+
+model ServiceCategory {
+    id       String    @id @default(uuid())
+    name     String
+    services Service[] 
+}
+
+model Booking {
+    id            String         @id @default(uuid())
+    userId        String
+    user          User           @relation(fields: [userId], references: [id])
+    serviceId     String
+    service       Service        @relation(fields: [serviceId], references: [id])
+    scheduledDate DateTime
+    status        BookingStatus  @default(pending)
+}
+
