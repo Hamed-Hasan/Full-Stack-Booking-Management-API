@@ -129,3 +129,13 @@ model FAQ {
     updatedAt  DateTime  @updatedAt
 }
 
+model Notification {
+    id        String   @id @default(uuid())
+    userId    String
+    user      User     @relation(fields: [userId], references: [id])
+    message   String
+    read      Boolean  @default(false)
+    createdAt DateTime @default(now())
+}
+
+
