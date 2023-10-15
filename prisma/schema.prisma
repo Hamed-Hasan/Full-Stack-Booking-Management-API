@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,14 +8,18 @@ datasource db {
 }
 
 
-
-
-
 model User {
-  id                String   @id @default(uuid()) @db.Uuid
-  email             String   @unique
-  password          String
-  needsPasswordChange Boolean @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+    id             String    @id @default(uuid())
+    email          String    @unique
+    password       String    
+    role           UserRole  @default(user)
+    createdAt      DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt     
+    bookings       Booking[]
+    reviews        Review[]
+    cartItems      CartItem[]
+    blogPosts  BlogPost[]
+    feedbacks      Feedback[]
+    notifications  Notification[] 
+    profile        Profile?
 }
