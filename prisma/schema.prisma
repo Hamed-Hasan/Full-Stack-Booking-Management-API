@@ -40,3 +40,16 @@ model Profile {
     updatedAt      DateTime  @updatedAt 
 }
 
+
+model Service {
+    id          String          @id @default(uuid())
+    name        String
+    description String
+    price       Int
+    categoryId  String
+    category    ServiceCategory @relation(fields: [categoryId], references: [id])
+    reviews     Review[]
+    bookings    Booking[]
+    cartItems   CartItem[]
+    availabilities Availability[]
+}
