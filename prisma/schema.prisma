@@ -70,3 +70,12 @@ model Booking {
     status        BookingStatus  @default(pending)
 }
 
+model Review {
+    id        String      @id @default(uuid())
+    userId    String
+    user      User        @relation(fields: [userId], references: [id])
+    serviceId String
+    service   Service     @relation(fields: [serviceId], references: [id])
+    review    String
+    rating    RatingValue
+}
