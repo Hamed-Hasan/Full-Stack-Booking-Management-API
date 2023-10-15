@@ -49,8 +49,8 @@ model Service {
     pricePerHour     Int
     brand            String
     model            String
-    fuelType         FuelType
-    transmission     Transmission
+    // fuelType         FuelType?       @default(PETROL)
+    // transmission     Transmission?   @default(AUTOMATIC)
     seatingCapacity  Int
     images           Image[]
     categoryId       String
