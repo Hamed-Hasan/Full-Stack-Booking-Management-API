@@ -10,6 +10,7 @@ import { AvailabilityRoutes } from '../modules/availability/availability.routes'
 import { BlogRoutes } from '../modules/blogs/blog.routes';
 import { FeedbackRoutes } from '../modules/feedback/feedback.routes';
 import { NotificationRoutes } from '../modules/notification/notification.routes';
+import { UserRoutes } from '../modules/user/user.routes';
 
 
 const router = express.Router();
@@ -18,6 +19,10 @@ const moduleRoutes = [
   {
     path: "/auth",
     routes: AuthRoutes
+  },
+  {
+    path: "/users",
+    routes: UserRoutes
   },
   {
     path: "/category",

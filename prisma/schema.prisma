@@ -16,7 +16,7 @@ model User {
     role           UserRole  @default(user)
     createdAt      DateTime  @default(now())
     updatedAt      DateTime  @updatedAt     
-    bookings       Booking[]
+    bookings       Booking[] 
     reviews        Review[]
     cartItems      CartItem[]
     blogPosts  BlogPost[]
@@ -28,7 +28,7 @@ model User {
 model Profile {
     id             String    @id @default(uuid())
     userId         String    @unique
-    user           User      @relation(fields: [userId], references: [id])
+    user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
     username       String?    @unique
     firstName      String?   
     lastName       String?   
@@ -80,7 +80,7 @@ model ServiceCategory {
 model Booking {
     id            String         @id @default(uuid())
     userId        String
-    user          User           @relation(fields: [userId], references: [id])
+    user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
     serviceId     String
     service       Service        @relation(fields: [serviceId], references: [id])
     scheduledDate DateTime
@@ -90,7 +90,7 @@ model Booking {
 model Review {
     id        String      @id @default(uuid())
     userId    String
-    user      User        @relation(fields: [userId], references: [id])
+    user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
     serviceId String
     service   Service     @relation(fields: [serviceId], references: [id])
     review    String
@@ -100,7 +100,7 @@ model Review {
 model CartItem {
     id        String  @id @default(uuid())
     userId    String
-    user      User    @relation(fields: [userId], references: [id])
+    user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
     serviceId String
     service   Service @relation(fields: [serviceId], references: [id])
     quantity  Int
@@ -123,7 +123,7 @@ model BlogPost {
     title      String
     content    String
     authorId   String    
-    author     User      @relation(fields: [authorId], references: [id])
+    author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
     createdAt  DateTime  @default(now())
     updatedAt  DateTime  @updatedAt
     @@index([authorId])
@@ -133,7 +133,7 @@ model BlogPost {
 model Feedback {
     id         String   @id @default(uuid())
     userId     String
-    user       User     @relation(fields: [userId], references: [id])
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     content    String
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
@@ -149,7 +149,7 @@ model FAQ {
 model Notification {
     id        String   @id @default(uuid())
     userId    String
-    user      User     @relation(fields: [userId], references: [id])
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     message   String
     read      Boolean  @default(false)
     createdAt DateTime @default(now())
