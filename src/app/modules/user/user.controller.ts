@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
+import fs from 'fs';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
-import { UserService } from './user.service';
-
+import { UserService, UserUpdateInput } from './user.service';
+import config from '../../../config';
 
 export const UserController = {
     getAllUsers: catchAsync(async (req: Request, res: Response) => {
@@ -15,10 +16,25 @@ export const UserController = {
         sendResponse(res, { statusCode: 200, success: true, data: user });
     }),
 
+
     updateUser: catchAsync(async (req: Request, res: Response) => {
-        const updatedUser = await UserService.updateUser(req.params.id, req.body);
+        const userData: UserUpdateInput = JSON.parse(req.body.data);
+        let profileImage;
+    
+        if (req.file) {
+            const uploadResult = await config.cloudinary.uploader.upload(req.file.path); 
+            profileImage = uploadResult.secure_url;
+            fs.unlink(req.file.path, (err) => {
+                if (err) {
+                  console.error('Error deleting file:', err);
+                }
+            });
+        }
+        const updatedUser = await UserService.updateUser(req.params.id, userData, profileImage);
         sendResponse(res, { statusCode: 200, success: true, data: updatedUser });
     }),
+    
+    
 
     deleteUser: catchAsync(async (req: Request, res: Response) => {
         await UserService.deleteUser(req.params.id);

@@ -1,8 +1,9 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, User as PrismaUser } from '@prisma/client';
+
 import prisma from '../../../shared/prisma';
 import {  UserRole } from './user.interface';
 
-
+export type User = PrismaUser;
 export type UserUpdateInput = {
     email?: string;
     password?: string;
@@ -39,39 +40,42 @@ export const UserService = {
         });
     },
 
-    async updateUser(id: string, data: UserUpdateInput) {
-        // First, try to find an existing Profile record for the User.
+    async updateUser(id: string, data: UserUpdateInput, profileImage?: string): Promise<User> {
         const existingProfile = await prisma.profile.findUnique({
             where: { userId: id },
         });
+
+        const profileData: Prisma.ProfileCreateInput | Prisma.ProfileUpdateInput = {
+            ...data.profile,
+            profileImage: profileImage || undefined,
+        };
     
-        // If a Profile record exists, perform a nested update.
         if (existingProfile) {
             return await prisma.user.update({
                 where: { id },
                 data: {
                     ...data,
                     profile: {
-                        update: data.profile,
+                        update: profileData,
                     },
                 },
                 include: { profile: true },
             });
         }
-        // If no Profile record exists, create a new Profile record.
         else {
             return await prisma.user.update({
                 where: { id },
                 data: {
                     ...data,
                     profile: {
-                        create: data.profile,
+                        create: profileData,
                     },
                 },
                 include: { profile: true },
             });
         }
-},
+    },
+
     
 
     async deleteUser(id: string) {
