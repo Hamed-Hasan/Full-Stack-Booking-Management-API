@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { BookingService } from './booking.service';
+import pick from '../../../shared/pick';
+import { BookingSearchableFields } from './constant';
 
 export const BookingController = {
     createBooking: catchAsync(async (req: Request, res: Response) => {
@@ -20,10 +22,15 @@ export const BookingController = {
         await BookingService.deleteBooking(req.params.id);
         sendResponse(res, { statusCode: 200, success: true, message: 'Booking deleted successfully.' });
     }),
+
+
     listBookings: catchAsync(async (req: Request, res: Response) => {
-        const result = await BookingService.listBookings();
-        sendResponse(res, { statusCode: 200, success: true, message: 'Bookings listed successfully.', data: result });
-    }),
+  const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
+  const filters = pick(req.query, [...BookingSearchableFields, 'searchTerm']); 
+
+  const result = await BookingService.listBookings(options, filters);
+  sendResponse(res, { statusCode: 200, success: true, message: 'Bookings listed successfully.', data: result });
+}),
 
      listUserBookings: catchAsync(async (req: Request, res: Response) => {
         const result = await BookingService.listUserBookings(req.params.userId);
