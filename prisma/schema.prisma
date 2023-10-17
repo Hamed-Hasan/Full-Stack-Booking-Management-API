@@ -15,7 +15,7 @@ model User {
     needsPasswordChange Boolean? @default(false)
     role           UserRole  @default(user)
     createdAt      DateTime  @default(now())
-    updatedAt      DateTime  @updatedAt     
+    updatedAt DateTime @default(now()) @updatedAt     
     bookings       Booking[] 
     reviews        Review[]
     cartItems      CartItem[]
@@ -38,7 +38,7 @@ model Profile {
     bio            String?  
     profileImage   String?   
     createdAt      DateTime  @default(now())
-    updatedAt      DateTime  @updatedAt 
+    updatedAt DateTime @default(now()) @updatedAt 
 }
 
 
@@ -76,6 +76,8 @@ model ServiceCategory {
     id       String    @id @default(uuid())
     name     String
     services Service[] 
+    createdAt      DateTime  @default(now())
+    updatedAt DateTime @default(now()) @updatedAt 
 }
 
 model Booking {
@@ -86,6 +88,8 @@ model Booking {
     service       Service        @relation(fields: [serviceId], references: [id])
     scheduledDate DateTime
     status        BookingStatus  @default(pending)
+    createdAt      DateTime  @default(now())
+    updatedAt DateTime @default(now()) @updatedAt 
 }
 
 model Review {
@@ -96,6 +100,8 @@ model Review {
     service   Service     @relation(fields: [serviceId], references: [id])
     review    String
     rating    RatingValue
+    createdAt      DateTime  @default(now())
+    updatedAt DateTime @default(now()) @updatedAt 
 }
 
 model CartItem {
@@ -105,6 +111,8 @@ model CartItem {
     serviceId String
     service   Service @relation(fields: [serviceId], references: [id])
     quantity  Int
+    createdAt      DateTime  @default(now())
+    updatedAt DateTime @default(now()) @updatedAt 
 }
 
 model Availability {
@@ -116,6 +124,8 @@ model Availability {
     startTime  String
     endTime    String
     daysOfWeek Json
+    createdAt      DateTime  @default(now())
+    updatedAt DateTime @default(now()) @updatedAt 
 }
 
 

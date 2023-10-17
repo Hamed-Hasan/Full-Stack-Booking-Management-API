@@ -1,11 +1,13 @@
-type IOptions = {
+// paginationHelpers.ts
+
+export type IOptions = {
   page?: number;
   limit?: number;
   sortBy?: string;
   sortOrder?: string;
 };
 
-type IOptionsResult = {
+export type IOptionsResult = {
   page: number;
   limit: number;
   skip: number;
@@ -13,7 +15,7 @@ type IOptionsResult = {
   sortOrder: string;
 };
 
-const calculatePagination = (options: IOptions): IOptionsResult => {
+export const calculatePagination = (options: IOptions): IOptionsResult => {
   const page = Number(options.page || 1);
   const limit = Number(options.limit || 10);
   const skip = (page - 1) * limit;
@@ -28,8 +30,4 @@ const calculatePagination = (options: IOptions): IOptionsResult => {
     sortBy,
     sortOrder,
   };
-};
-
-export const paginationHelpers = {
-  calculatePagination,
 };

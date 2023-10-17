@@ -2,12 +2,12 @@ import {  IService } from './service.interface';
 import { Prisma, Service } from '@prisma/client';
 import prisma from '../../../shared/prisma';
 import { IOptions, ServiceFilterableFields, ServiceSearchableFields } from './service.constant';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
+import { calculatePagination } from '../../../helpers/paginationHelper';
 
 
 const listAllServices = async (options: IOptions, filters: any): Promise<IGenericResponse<IService[]>> => {
-  const { page, limit, skip, sortBy, sortOrder } = paginationHelpers.calculatePagination(options);
+  const { page, limit, skip, sortBy, sortOrder } = calculatePagination(options);
   
   // Build the WHERE condition for filtering and searching
   const andConditions = [];

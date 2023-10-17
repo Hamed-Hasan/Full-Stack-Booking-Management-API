@@ -2,6 +2,15 @@ import { Prisma, User as PrismaUser } from '@prisma/client';
 
 import prisma from '../../../shared/prisma';
 import {  UserRole } from './user.interface';
+import { UserFilterableFields, UserSearchableFields } from './user.constant';
+import { calculatePagination } from '../../../helpers/paginationHelper';
+
+export type IOptions = {
+    page?: number;
+    limit?: number;
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+  };
 
 export type User = PrismaUser;
 export type UserUpdateInput = {
@@ -11,19 +20,55 @@ export type UserUpdateInput = {
     profile?: Prisma.ProfileUpdateInput;
 };
 export const UserService = {
-    async getAllUsers() {
-        return await prisma.user.findMany({
-            include: {
-                bookings: true,
-                reviews: true,
-                cartItems: true,
-                blogPosts: true,
-                feedbacks: true,
-                notifications: true,
-                profile: true,
-            },
+    listAllUsers: async (options: IOptions, filters: any) => {
+        const { page, limit, sortBy, sortOrder } = calculatePagination(options);
+    
+        // Define skip and take for pagination
+        const skip = (page - 1) * limit;
+        const take = limit;
+    
+        // Build the WHERE condition for filtering and searching
+        const andConditions = [];
+    
+        // Handling search
+        if (filters.searchTerm) {
+          andConditions.push({
+            OR: UserSearchableFields.map((field) => ({
+              [field]: { contains: filters.searchTerm, mode: 'insensitive' },
+            })),
+          });
+        }
+    
+        // Handling filtering
+        UserFilterableFields.forEach((field) => {
+          if (filters[field]) {
+            andConditions.push({ [field]: { equals: filters[field] } });
+          }
         });
-    },
+    
+        const whereConditions = andConditions.length > 0 ? { AND: andConditions } : {};
+    
+        // Execute the query with pagination, sorting, and filtering
+        const users = await prisma.user.findMany({
+          where: whereConditions,
+          skip,
+          take,
+          orderBy: {
+            [sortBy]: sortOrder,
+          },
+        });
+    
+        const total = await prisma.user.count({ where: whereConditions });
+    
+        return {
+          meta: {
+            total,
+            page,
+            limit,
+          },
+          data: users,
+        };
+      },
 
     async getUserById(id: string) {
         return await prisma.user.findUnique({
