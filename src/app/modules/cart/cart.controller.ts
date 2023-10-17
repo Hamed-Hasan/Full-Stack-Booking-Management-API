@@ -35,7 +35,11 @@ const removeCartItem = catchAsync(async (req: Request, res: Response) => {
 const listCartItems = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.userId;
   const { page, limit } = req.query;
-  const result = await CartItemService.listCartItems(userId, parseInt(page as string), parseInt(limit as string));
+  const result = await CartItemService.listCartItems(
+    userId,
+    parseInt(page as string),
+    parseInt(limit as string)
+  );
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -43,7 +47,6 @@ const listCartItems = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-
 
 const getCartItem = catchAsync(async (req: Request, res: Response) => {
   const cartItem = await CartItemService.getCartItem(req.params.id);

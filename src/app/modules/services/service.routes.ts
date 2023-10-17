@@ -14,10 +14,9 @@ const router = express.Router();
 router.post(
   '/create-services',
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
-  upload.array('files', 5), 
+  upload.array('files', 5),
   ServiceController.createService
 );
-
 
 router.get('/:serviceId', ServiceController.getService);
 

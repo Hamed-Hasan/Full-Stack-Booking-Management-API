@@ -2,7 +2,11 @@
 
 import { calculatePagination } from '../../../helpers/paginationHelper';
 import prisma from '../../../shared/prisma';
-import { BlogFilterableFields, BlogSearchableFields, IOptions } from './blog.constant';
+import {
+  BlogFilterableFields,
+  BlogSearchableFields,
+  IOptions,
+} from './blog.constant';
 import { IBlogPost } from './blog.interface';
 
 const createBlogPost = async (payload: IBlogPost) => {
@@ -39,15 +43,17 @@ const listBlogPosts = async (options: IOptions, filters: any) => {
     });
   }
 
-// Handling filtering
-BlogFilterableFields.forEach(field => {
-  if (filters[field]) {
-    andConditions.push({ [field]: { contains: filters[field], mode: 'insensitive' } }); // Add 'insensitive' mode
-  }
-});
+  // Handling filtering
+  BlogFilterableFields.forEach(field => {
+    if (filters[field]) {
+      andConditions.push({
+        [field]: { contains: filters[field], mode: 'insensitive' },
+      }); // Add 'insensitive' mode
+    }
+  });
 
-
-  const whereConditions = andConditions.length > 0 ? { AND: andConditions } : {};
+  const whereConditions =
+    andConditions.length > 0 ? { AND: andConditions } : {};
 
   // Execute the query with pagination, sorting, and filtering
   const blogPosts = await prisma.blogPost.findMany({
@@ -57,8 +63,8 @@ BlogFilterableFields.forEach(field => {
     orderBy: {
       [sortBy]: sortOrder,
     },
-    include: { 
-     author:true
+    include: {
+      author: true,
     },
   });
 
@@ -73,10 +79,6 @@ BlogFilterableFields.forEach(field => {
     data: blogPosts,
   };
 };
-
-
-
-
 
 export const BlogService = {
   createBlogPost,

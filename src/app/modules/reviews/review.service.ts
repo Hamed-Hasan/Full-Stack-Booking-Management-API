@@ -1,6 +1,9 @@
 import prisma from '../../../shared/prisma';
 import { Prisma, RatingValue } from '@prisma/client';
-import { ReviewFilterableFields, ReviewSearchableFields } from './review.constant';
+import {
+  ReviewFilterableFields,
+  ReviewSearchableFields,
+} from './review.constant';
 import { calculatePagination } from '../../../helpers/paginationHelper';
 import { IOptions } from '../services/service.constant';
 
@@ -28,20 +31,21 @@ const getReviews = async (options: IOptions, filters: any) => {
   // Handling search
   if (filters.searchTerm) {
     andConditions.push({
-      OR: ReviewSearchableFields.map((field) => ({
+      OR: ReviewSearchableFields.map(field => ({
         [field]: { contains: filters.searchTerm, mode: 'insensitive' },
       })),
     });
   }
 
   // Handling filtering
-  ReviewFilterableFields.forEach((field) => {
+  ReviewFilterableFields.forEach(field => {
     if (filters[field]) {
       andConditions.push({ [field]: { equals: filters[field] } });
     }
   });
 
-  const whereConditions = andConditions.length > 0 ? { AND: andConditions } : {};
+  const whereConditions =
+    andConditions.length > 0 ? { AND: andConditions } : {};
 
   const reviews = await prisma.review.findMany({
     where: whereConditions,
@@ -64,8 +68,6 @@ const getReviews = async (options: IOptions, filters: any) => {
     data: reviews,
   };
 };
-
-
 
 const getReview = async (id: string) => {
   return await prisma.review.findUnique({

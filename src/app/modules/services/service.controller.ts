@@ -33,7 +33,7 @@ const createService = catchAsync(async (req, res) => {
   const imageFiles = req.files;
 
   if (imageFiles) {
-    const imagePromises = imageFiles.map(async (file) => {
+    const imagePromises = imageFiles.map(async file => {
       const uploadResult = await config.cloudinary.uploader.upload(file.path);
       return { filePath: uploadResult.secure_url };
     });
@@ -44,7 +44,6 @@ const createService = catchAsync(async (req, res) => {
   const service = await ServiceService.createService(serviceData);
   sendResponse(res, { statusCode: 201, success: true, data: service });
 });
-
 
 const getService = catchAsync(async (req: Request, res: Response) => {
   const service = await ServiceService.getService(req.params.serviceId);

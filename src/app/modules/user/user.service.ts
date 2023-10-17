@@ -51,9 +51,9 @@ export const UserService = {
 
     // Execute the query with pagination, sorting, and filtering
     const users = await prisma.user.findMany({
-       include: {
+      include: {
         profile: true,
-       },
+      },
       where: whereConditions,
       skip,
       take,

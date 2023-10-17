@@ -39,6 +39,14 @@ const listAllServices = async (
 
   // Execute the query with pagination, sorting, and filtering
   const services = await prisma.service.findMany({
+    include: {
+      images: true,
+      availabilities: true,
+      bookings: true,
+      cartItems: true,
+      category: true,
+      reviews: true,
+    },
     where: whereConditions,
     skip,
     take: limit,

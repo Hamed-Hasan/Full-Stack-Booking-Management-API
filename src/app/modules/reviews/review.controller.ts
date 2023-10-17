@@ -5,7 +5,10 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { ReviewService } from './review.service';
 import pick from '../../../shared/pick';
-import { ReviewFilterableFields, ReviewSearchableFields } from './review.constant';
+import {
+  ReviewFilterableFields,
+  ReviewSearchableFields,
+} from './review.constant';
 
 const createReview = catchAsync(async (req: Request, res: Response) => {
   const result = await ReviewService.createReview(req.body);
@@ -19,7 +22,10 @@ const createReview = catchAsync(async (req: Request, res: Response) => {
 
 const getReviews = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
-  const filters = pick(req.query, [...ReviewSearchableFields, ...ReviewFilterableFields]);
+  const filters = pick(req.query, [
+    ...ReviewSearchableFields,
+    ...ReviewFilterableFields,
+  ]);
 
   const result = await ReviewService.getReviews(options, filters);
   sendResponse(res, {

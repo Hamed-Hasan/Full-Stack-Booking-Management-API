@@ -45,7 +45,14 @@ const deleteBlogPost = catchAsync(async (req: Request, res: Response) => {
 
 const listBlogPosts = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
-  const filters = pick(req.query, ['search', 'title', 'content', 'username', 'firstName', 'lastName']);
+  const filters = pick(req.query, [
+    'search',
+    'title',
+    'content',
+    'username',
+    'firstName',
+    'lastName',
+  ]);
 
   const result = await BlogService.listBlogPosts(options, filters);
   sendResponse(res, {
