@@ -28,16 +28,23 @@ const listAllServices = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const createService = catchAsync(async (req: Request, res: Response) => {
+const createService = catchAsync(async (req, res) => {
   const serviceData: IService = JSON.parse(req.body.data);
-  if (req.file) {
-    const uploadResult = await config.cloudinary.uploader.upload(req.file.path);
-    serviceData.images = [{ filePath: uploadResult.secure_url }];
+  const imageFiles = req.files;
+
+  if (imageFiles) {
+    const imagePromises = imageFiles.map(async (file) => {
+      const uploadResult = await config.cloudinary.uploader.upload(file.path);
+      return { filePath: uploadResult.secure_url };
+    });
+
+    serviceData.images = await Promise.all(imagePromises);
   }
 
   const service = await ServiceService.createService(serviceData);
   sendResponse(res, { statusCode: 201, success: true, data: service });
 });
+
 
 const getService = catchAsync(async (req: Request, res: Response) => {
   const service = await ServiceService.getService(req.params.serviceId);
