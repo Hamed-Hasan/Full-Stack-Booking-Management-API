@@ -2,24 +2,24 @@ import prisma from '../../../shared/prisma';
 import { IFeedback } from './feedback.interface';
 
 const createFeedback = async (payload: IFeedback) => {
-  return await prisma.feedback.create({ 
+  return await prisma.feedback.create({
     data: payload,
-    include: { user: true }
+    include: { user: true },
   });
 };
 
 const getFeedback = async (id: string) => {
-  return await prisma.feedback.findUnique({ 
+  return await prisma.feedback.findUnique({
     where: { id },
-    include: { user: true }
+    include: { user: true },
   });
 };
 
 const updateFeedback = async (id: string, payload: Partial<IFeedback>) => {
-  return await prisma.feedback.update({ 
+  return await prisma.feedback.update({
     where: { id },
     data: payload,
-    include: { user: true }
+    include: { user: true },
   });
 };
 

@@ -26,7 +26,7 @@ const config = {
     expires_in: process.env.JWT_EXPIRES_IN,
     refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
   },
-  cloudinary: cloudinary.v2,  
+  cloudinary: cloudinary.v2,
 };
 
 export default config;

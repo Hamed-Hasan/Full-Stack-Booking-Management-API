@@ -12,14 +12,11 @@ router.post(
 );
 
 router.post(
-    '/bulk-create',
-    validateRequest(CategoryValidation.createMultipleCategoriesZodSchema),
-    CategoryController.createMultipleCategories
-  );
-router.get(
-  '/:id',
-  CategoryController.getCategory
+  '/bulk-create',
+  validateRequest(CategoryValidation.createMultipleCategoriesZodSchema),
+  CategoryController.createMultipleCategories
 );
+router.get('/:id', CategoryController.getCategory);
 
 router.put(
   '/:id',
@@ -27,14 +24,8 @@ router.put(
   CategoryController.updateCategory
 );
 
-router.delete(
-  '/:id',
-  CategoryController.deleteCategory
-);
+router.delete('/:id', CategoryController.deleteCategory);
 
-router.get(
-  '/',
-  CategoryController.listCategories
-);
+router.get('/', CategoryController.listCategories);
 
 export const CategoryRoutes = router;

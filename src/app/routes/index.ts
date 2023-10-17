@@ -12,58 +12,57 @@ import { FeedbackRoutes } from '../modules/feedback/feedback.routes';
 import { NotificationRoutes } from '../modules/notification/notification.routes';
 import { UserRoutes } from '../modules/user/user.routes';
 
-
 const router = express.Router();
 
 const moduleRoutes = [
   {
-    path: "/auth",
-    routes: AuthRoutes
+    path: '/auth',
+    routes: AuthRoutes,
   },
   {
-    path: "/users",
-    routes: UserRoutes
+    path: '/users',
+    routes: UserRoutes,
   },
   {
-    path: "/category",
-    routes: CategoryRoutes
+    path: '/category',
+    routes: CategoryRoutes,
   },
   {
-    path: "/services",
-    routes: ServiceRoutes
+    path: '/services',
+    routes: ServiceRoutes,
   },
   {
-    path: "/cart",
-    routes: CartItemRoutes
+    path: '/cart',
+    routes: CartItemRoutes,
   },
   {
-    path: "/booking",
-    routes: BookingRoutes
+    path: '/booking',
+    routes: BookingRoutes,
   },
   {
-    path: "/profiles",
-    routes: ProfileRoutes
+    path: '/profiles',
+    routes: ProfileRoutes,
   },
   {
-    path: "/reviews",
-    routes: ReviewRoutes
+    path: '/reviews',
+    routes: ReviewRoutes,
   },
   {
-    path: "/availability",
-    routes: AvailabilityRoutes
+    path: '/availability',
+    routes: AvailabilityRoutes,
   },
   {
-    path: "/blog",
-    routes: BlogRoutes 
+    path: '/blog',
+    routes: BlogRoutes,
   },
   {
-    path: "/feedback",
-    routes: FeedbackRoutes 
+    path: '/feedback',
+    routes: FeedbackRoutes,
   },
   {
-    path: "/notification",
-    routes: NotificationRoutes  
-  }
+    path: '/notification',
+    routes: NotificationRoutes,
+  },
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.routes));

@@ -17,19 +17,10 @@ router.put(
   CartItemController.updateCartItem
 );
 
-router.delete(
-  '/:id',
-  CartItemController.removeCartItem
-);
+router.delete('/:id', CartItemController.removeCartItem);
 
-router.get(
-  '/user/:userId',
-  CartItemController.listCartItems
-);
+router.get('/user/:userId', CartItemController.listCartItems);
 
-router.get(
-  '/:id',
-  CartItemController.getCartItem
-);
+router.get('/:id', CartItemController.getCartItem);
 
 export const CartItemRoutes = router;

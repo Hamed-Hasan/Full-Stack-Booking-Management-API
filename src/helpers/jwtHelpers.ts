@@ -13,9 +13,9 @@ const createToken = (
   payload: Record<string, unknown>,
   secret: Secret,
   expireTime: string,
-  role: string  // Add this line
+  role: string // Add this line
 ): string => {
-  const newPayload = { ...payload, role };  // Include the role in the payload
+  const newPayload = { ...payload, role }; // Include the role in the payload
   return jwt.sign(newPayload, secret, { expiresIn: expireTime });
 };
 

@@ -16,7 +16,7 @@ const registerUser = catchAsync(async (req: Request, res: Response) => {
     statusCode: 201,
     success: true,
     message: 'User registered successfully!',
-    data: registerData
+    data: registerData,
   });
 });
 
@@ -53,38 +53,34 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
 const changePassword = catchAsync(async (req: Request, res: Response) => {
   const authHeader = req.headers.authorization;
-  
+
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'User not authorized');
   }
 
   const token = authHeader.split(' ')[1];
-  
-  let userId: string;  // Change the type to string
+
+  let userId: string; // Change the type to string
   try {
     const decodedToken = jwt.verify(token, config.jwt.secret as string) as any;
-    console.log(decodedToken); 
+    console.log(decodedToken);
     userId = decodedToken.userId.toString();
   } catch (error) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'User not authorized');
   }
-  
+
   const { ...passwordData } = req.body;
-  
+
   await AuthService.changePassword(userId, passwordData);
-  
+
   sendResponse(res, {
     statusCode: 200,
     success: true,
     message: 'Password changed successfully !',
   });
 });
-
-
-  
 
 export const AuthController = {
   registerUser,

@@ -13,10 +13,7 @@ router.post(
   BlogController.createBlogPost
 );
 
-router.get(
-  '/:id',
-  BlogController.getBlogPost
-);
+router.get('/:id', BlogController.getBlogPost);
 
 router.put(
   '/:id',
@@ -24,14 +21,8 @@ router.put(
   BlogController.updateBlogPost
 );
 
-router.delete(
-  '/:id',
-  BlogController.deleteBlogPost
-);
+router.delete('/:id', BlogController.deleteBlogPost);
 
-router.get(
-  '/',
-  BlogController.listBlogPosts
-);
+router.get('/', BlogController.listBlogPosts);
 
 export const BlogRoutes = router;

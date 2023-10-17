@@ -3,7 +3,7 @@ import { z } from 'zod';
 const registerZodSchema = z.object({
   body: z.object({
     email: z.string().email({ message: 'Invalid email address' }),
-    password: z.string().min(6, { message: 'Password too short' })
+    password: z.string().min(6, { message: 'Password too short' }),
   }),
 });
 

@@ -9,7 +9,7 @@ export type IService = {
   brand: string;
   model: string;
   fuelType?: FuelType | null | string;
-  transmission?: Transmission | null | string;  
+  transmission?: Transmission | null | string;
   seatingCapacity: number;
   images?: IImage[];
   categoryId: string;

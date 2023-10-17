@@ -13,13 +13,15 @@ const updateCategoryZodSchema = z.object({
 });
 
 const createMultipleCategoriesZodSchema = z.object({
-    body: z.array(z.object({
-      name: z.string().nonempty({ message: 'Name is required' })
-    }))
-  });
+  body: z.array(
+    z.object({
+      name: z.string().nonempty({ message: 'Name is required' }),
+    })
+  ),
+});
 
 export const CategoryValidation = {
   createCategoryZodSchema,
   updateCategoryZodSchema,
-  createMultipleCategoriesZodSchema
+  createMultipleCategoriesZodSchema,
 };

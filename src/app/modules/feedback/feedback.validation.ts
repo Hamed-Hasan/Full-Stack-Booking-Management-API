@@ -15,5 +15,5 @@ const updateFeedbackZodSchema = z.object({
 
 export const FeedbackValidation = {
   createFeedbackZodSchema,
-  updateFeedbackZodSchema
+  updateFeedbackZodSchema,
 };

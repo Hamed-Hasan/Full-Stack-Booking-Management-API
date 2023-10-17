@@ -11,10 +11,7 @@ router.post(
   FaqController.createFaq
 );
 
-router.get(
-  '/:id',
-  FaqController.getFaq
-);
+router.get('/:id', FaqController.getFaq);
 
 router.put(
   '/:id',
@@ -22,14 +19,8 @@ router.put(
   FaqController.updateFaq
 );
 
-router.delete(
-  '/:id',
-  FaqController.deleteFaq
-);
+router.delete('/:id', FaqController.deleteFaq);
 
-router.get(
-  '/',
-  FaqController.listFaqs
-);
+router.get('/', FaqController.listFaqs);
 
 export const FaqRoutes = router;

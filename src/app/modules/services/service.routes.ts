@@ -7,26 +7,18 @@ import { ServiceController } from './service.controller';
 import auth from '../../middlewares/auth';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 
-
 const upload = multer({ dest: 'uploads/' });
 
 const router = express.Router();
 
 router.post(
-    '/create-services',
-    auth(
-      ENUM_USER_ROLE.ADMIN,
-      ENUM_USER_ROLE.SUPER_ADMIN,
-      ),
-    upload.single('file'),  
-    ServiceController.createService
-  );
-
-
-router.get(
-'/:serviceId', 
-ServiceController.getService
+  '/create-services',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  upload.single('file'),
+  ServiceController.createService
 );
+
+router.get('/:serviceId', ServiceController.getService);
 
 router.put(
   '/:serviceId',
@@ -34,12 +26,8 @@ router.put(
   ServiceController.updateService
 );
 
-router.delete(
-'/:serviceId', ServiceController.deleteService
-);
+router.delete('/:serviceId', ServiceController.deleteService);
 
-router.get(
-'/', ServiceController.listAllServices
-);
+router.get('/', ServiceController.listAllServices);
 
 export const ServiceRoutes = router;

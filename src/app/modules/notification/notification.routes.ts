@@ -11,10 +11,7 @@ router.post(
   NotificationController.createNotification
 );
 
-router.get(
-  '/:id',
-  NotificationController.getNotification
-);
+router.get('/:id', NotificationController.getNotification);
 
 router.put(
   '/:id',
@@ -22,19 +19,10 @@ router.put(
   NotificationController.updateNotification
 );
 
-router.delete(
-  '/:id',
-  NotificationController.deleteNotification
-);
+router.delete('/:id', NotificationController.deleteNotification);
 
-router.get(
-  '/',
-  NotificationController.listNotifications
-);
+router.get('/', NotificationController.listNotifications);
 
-router.get(
-    '/user/:userId',
-    NotificationController.getUserNotifications
-  );
+router.get('/user/:userId', NotificationController.getUserNotifications);
 
 export const NotificationRoutes = router;

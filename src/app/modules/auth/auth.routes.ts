@@ -20,10 +20,7 @@ router.post(
 );
 
 // Route for Refreshing Tokens
-router.post(
-  '/refresh-token',
-  AuthController.refreshToken
-);
+router.post('/refresh-token', AuthController.refreshToken);
 
 // Route for Changing Password
 router.post(
@@ -31,6 +28,5 @@ router.post(
   validateRequest(AuthValidation.changePasswordZodSchema),
   AuthController.changePassword
 );
-
 
 export const AuthRoutes = router;

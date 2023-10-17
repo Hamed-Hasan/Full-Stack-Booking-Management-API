@@ -21,18 +21,20 @@ const getProfile = async (userId: string): Promise<IProfile | null> => {
 };
 
 const updateProfile = async (userId: string, payload: Partial<IProfile>) => {
-    // Check for profile existence
-    const existingProfile = await prisma.profile.findUnique({ where: { userId } });
-    if (!existingProfile) {
-      throw new Error('Profile not found for the provided user ID.');
-    }
-  
-    // Update the profile
-    return await prisma.profile.update({
-      where: { userId },
-      data: payload
-    });
-  };
+  // Check for profile existence
+  const existingProfile = await prisma.profile.findUnique({
+    where: { userId },
+  });
+  if (!existingProfile) {
+    throw new Error('Profile not found for the provided user ID.');
+  }
+
+  // Update the profile
+  return await prisma.profile.update({
+    where: { userId },
+    data: payload,
+  });
+};
 
 const deleteProfile = async (userId: string): Promise<IProfile> => {
   return await prisma.profile.delete({

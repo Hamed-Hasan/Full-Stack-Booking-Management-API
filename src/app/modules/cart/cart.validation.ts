@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
- const createCartItemZodSchema = z.object({
+const createCartItemZodSchema = z.object({
   body: z.object({
     userId: z.string(),
     serviceId: z.string(),
@@ -8,14 +8,13 @@ import { z } from 'zod';
   }),
 });
 
- const updateCartItemZodSchema = z.object({
+const updateCartItemZodSchema = z.object({
   body: z.object({
     quantity: z.number().min(1).optional(),
   }),
 });
 
 export const CartItemValidation = {
-    createCartItemZodSchema,
-    updateCartItemZodSchema,
-  };
-  
+  createCartItemZodSchema,
+  updateCartItemZodSchema,
+};

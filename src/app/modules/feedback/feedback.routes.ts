@@ -11,10 +11,7 @@ router.post(
   FeedbackController.createFeedback
 );
 
-router.get(
-  '/:id',
-  FeedbackController.getFeedback
-);
+router.get('/:id', FeedbackController.getFeedback);
 
 router.put(
   '/:id',
@@ -22,14 +19,8 @@ router.put(
   FeedbackController.updateFeedback
 );
 
-router.delete(
-  '/:id',
-  FeedbackController.deleteFeedback
-);
+router.delete('/:id', FeedbackController.deleteFeedback);
 
-router.get(
-  '/',
-  FeedbackController.listFeedback
-);
+router.get('/', FeedbackController.listFeedback);
 
 export const FeedbackRoutes = router;

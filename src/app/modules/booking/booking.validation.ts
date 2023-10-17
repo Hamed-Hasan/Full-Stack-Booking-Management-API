@@ -13,9 +13,12 @@ const bookingZodSchema = z.object({
 
 const updateBookingZodSchema = z.object({
   body: z.object({
-    scheduledDate: z.string().refine(value => !isNaN(Date.parse(value)), {
-      message: 'Scheduled date must be a valid date-time string',
-    }).optional(),
+    scheduledDate: z
+      .string()
+      .refine(value => !isNaN(Date.parse(value)), {
+        message: 'Scheduled date must be a valid date-time string',
+      })
+      .optional(),
     status: z.enum(['pending', 'confirmed', 'cancelled']).optional(),
   }),
 });

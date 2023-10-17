@@ -11,14 +11,14 @@ const daysOfWeekSchema = z.object({
 });
 
 const createUpdateAvailabilitySchema = z.object({
-body: z.object({
+  body: z.object({
     serviceId: z.string(),
     startDate: z.date(),
     endDate: z.date(),
     startTime: z.string(),
     endTime: z.string(),
     daysOfWeek: daysOfWeekSchema,
-})
+  }),
 });
 
 export const AvailabilityValidation = {

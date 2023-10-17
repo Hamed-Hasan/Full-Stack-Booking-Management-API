@@ -12,7 +12,10 @@ const updateBlogPostSchema = z.object({
   body: z.object({
     title: z.string().nonempty({ message: 'Title is required' }).optional(),
     content: z.string().nonempty({ message: 'Content is required' }).optional(),
-    authorId: z.string().nonempty({ message: 'Author ID is required' }).optional(),
+    authorId: z
+      .string()
+      .nonempty({ message: 'Author ID is required' })
+      .optional(),
   }),
 });
 

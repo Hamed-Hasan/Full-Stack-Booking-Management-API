@@ -1,6 +1,5 @@
 export type ICartItem = {
-    userId: string;
-    serviceId: string;
-    quantity: number;
-  };
-  
+  userId: string;
+  serviceId: string;
+  quantity: number;
+};

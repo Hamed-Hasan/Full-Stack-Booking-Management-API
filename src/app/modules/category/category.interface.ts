@@ -1,6 +1,3 @@
 export type ICategory = {
-    name: string;
-  };
-  
-
-  
+  name: string;
+};

@@ -2,20 +2,23 @@ import { calculatePagination } from '../../../helpers/paginationHelper';
 import prisma from '../../../shared/prisma';
 import { IOptions } from '../services/service.constant';
 import { ICategory } from './category.interface';
-import { CategoryFilterableFields, CategorySearchableFields } from './category.constant';
-
-
+import {
+  CategoryFilterableFields,
+  CategorySearchableFields,
+} from './category.constant';
 
 const createCategory = async (payload: ICategory) => {
   return await prisma.serviceCategory.create({ data: payload });
 };
 
-const createMultipleCategories = async (categories: Array<{ name: string }>) => {
-    const result = await prisma.serviceCategory.createMany({
-      data: categories,
-    });
-    return result;
-  };
+const createMultipleCategories = async (
+  categories: Array<{ name: string }>
+) => {
+  const result = await prisma.serviceCategory.createMany({
+    data: categories,
+  });
+  return result;
+};
 
 const getCategory = async (id: string) => {
   return await prisma.serviceCategory.findUnique({ where: { id } });
@@ -42,20 +45,21 @@ const listCategories = async (options: IOptions, filters: any) => {
   // Handling search
   if (filters.searchTerm) {
     andConditions.push({
-      OR: CategorySearchableFields.map((field) => ({
+      OR: CategorySearchableFields.map(field => ({
         [field]: { contains: filters.searchTerm, mode: 'insensitive' },
       })),
     });
   }
 
   // Handling filtering
-  CategoryFilterableFields.forEach((field) => {
+  CategoryFilterableFields.forEach(field => {
     if (filters[field]) {
       andConditions.push({ [field]: { equals: filters[field] } });
     }
   });
 
-  const whereConditions = andConditions.length > 0 ? { AND: andConditions } : {};
+  const whereConditions =
+    andConditions.length > 0 ? { AND: andConditions } : {};
 
   // Execute the query with pagination, sorting, and filtering
   const categories = await prisma.serviceCategory.findMany({

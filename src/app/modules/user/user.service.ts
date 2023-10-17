@@ -33,20 +33,21 @@ export const UserService = {
     // Handling search
     if (filters.searchTerm) {
       andConditions.push({
-        OR: UserSearchableFields.map((field) => ({
+        OR: UserSearchableFields.map(field => ({
           [field]: { contains: filters.searchTerm, mode: 'insensitive' },
         })),
       });
     }
 
     // Handling filtering
-    UserFilterableFields.forEach((field) => {
+    UserFilterableFields.forEach(field => {
       if (filters[field]) {
         andConditions.push({ [field]: { equals: filters[field] } });
       }
     });
 
-    const whereConditions = andConditions.length > 0 ? { AND: andConditions } : {};
+    const whereConditions =
+      andConditions.length > 0 ? { AND: andConditions } : {};
 
     // Execute the query with pagination, sorting, and filtering
     const users = await prisma.user.findMany({
@@ -97,7 +98,11 @@ export const UserService = {
     });
   },
 
-  async updateUser(id: string, data: UserUpdateInput, profileImage?: string): Promise<User> {
+  async updateUser(
+    id: string,
+    data: UserUpdateInput,
+    profileImage?: string
+  ): Promise<User> {
     const existingProfile = await prisma.profile.findUnique({
       where: { userId: id },
     });

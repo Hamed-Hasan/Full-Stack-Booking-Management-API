@@ -9,12 +9,11 @@ export const RatingValueEnum = z.union([
 ]);
 
 const reviewZodSchema = z.object({
-    body: z.object({
-      review: z.string(),
-      rating: RatingValueEnum,
-    }),
-  });
-  
+  body: z.object({
+    review: z.string(),
+    rating: RatingValueEnum,
+  }),
+});
 
 const createReviewZodSchema = z.object({
   body: z.object({

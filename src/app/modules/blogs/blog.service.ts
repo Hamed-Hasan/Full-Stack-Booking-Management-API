@@ -8,7 +8,10 @@ const createBlogPost = async (payload: IBlogPost) => {
 };
 
 const getBlogPost = async (id: string) => {
-  return await prisma.blogPost.findUnique({ where: { id }, include: { author: true } });
+  return await prisma.blogPost.findUnique({
+    where: { id },
+    include: { author: true },
+  });
 };
 
 const updateBlogPost = async (id: string, payload: Partial<IBlogPost>) => {

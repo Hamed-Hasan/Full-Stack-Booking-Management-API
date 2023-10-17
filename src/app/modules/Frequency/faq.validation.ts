@@ -9,7 +9,10 @@ const createFaqZodSchema = z.object({
 
 const updateFaqZodSchema = z.object({
   body: z.object({
-    question: z.string().nonempty({ message: 'Question is required' }).optional(),
+    question: z
+      .string()
+      .nonempty({ message: 'Question is required' })
+      .optional(),
     answer: z.string().nonempty({ message: 'Answer is required' }).optional(),
   }),
 });

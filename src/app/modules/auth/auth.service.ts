@@ -1,13 +1,17 @@
-
 import bcrypt from 'bcrypt';
 import config from '../../../config';
 import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 import { Secret } from 'jsonwebtoken';
-import { IChangePassword, ILoginUser, ILoginUserResponse, IRefreshTokenResponse, IRegisterUser } from './auth.Interfaces';
+import {
+  IChangePassword,
+  ILoginUser,
+  ILoginUserResponse,
+  IRefreshTokenResponse,
+  IRegisterUser,
+} from './auth.Interfaces';
 import prisma from '../../../shared/prisma';
-
 
 const registerUser = async (payload: IRegisterUser): Promise<void> => {
   const { email, password } = payload;
@@ -30,8 +34,6 @@ const registerUser = async (payload: IRegisterUser): Promise<void> => {
   });
 };
 
-  
-
 const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   const { email, password } = payload;
 
@@ -49,14 +51,14 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     { userId: user.id },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string,
-    user.role  // Pass the user's role here
+    user.role // Pass the user's role here
   );
 
   const refreshToken = jwtHelpers.createToken(
     { userId: user.id },
     config.jwt.refresh_secret as Secret,
     config.jwt.refresh_expires_in as string,
-    user.role  // Pass the user's role here
+    user.role // Pass the user's role here
   );
 
   return {
@@ -77,7 +79,9 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
     throw new ApiError(httpStatus.FORBIDDEN, 'Invalid Refresh Token');
   }
 
-  const user = await prisma.user.findUnique({ where: { id: verifiedToken.userId } });
+  const user = await prisma.user.findUnique({
+    where: { id: verifiedToken.userId },
+  });
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
   }
@@ -87,7 +91,7 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
     { userId: user.id },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string,
-    user.role 
+    user.role
   );
 
   return {
