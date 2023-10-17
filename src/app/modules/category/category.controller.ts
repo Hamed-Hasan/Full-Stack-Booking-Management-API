@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { CategoryService } from './category.service';
+import pick from '../../../shared/pick';
+import { CategoryFilterableFields, CategorySearchableFields } from './category.constant';
 
 const createCategory = catchAsync(async (req: Request, res: Response) => {
   const result = await CategoryService.createCategory(req.body);
@@ -30,8 +32,11 @@ const deleteCategory = catchAsync(async (req: Request, res: Response) => {
 });
 
 const listCategories = catchAsync(async (req: Request, res: Response) => {
-  const result = await CategoryService.listCategories();
-  sendResponse(res, { statusCode: 200, success: true, message: 'Categories listed successfully.', data: result });
+  const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
+  const filters = pick(req.query, [...CategorySearchableFields, ...CategoryFilterableFields, 'searchTerm']);
+
+  const result = await CategoryService.listCategories(options, filters);
+  sendResponse(res, { statusCode: 200, success: true, meta: result.meta, data: result.data });
 });
 
 export const CategoryController = {
