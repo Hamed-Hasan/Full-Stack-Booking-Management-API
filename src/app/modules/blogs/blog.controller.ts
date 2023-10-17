@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { BlogService } from './blog.service';
+import pick from '../../../shared/pick';
 
 const createBlogPost = catchAsync(async (req: Request, res: Response) => {
   const result = await BlogService.createBlogPost(req.body);
@@ -43,7 +44,10 @@ const deleteBlogPost = catchAsync(async (req: Request, res: Response) => {
 });
 
 const listBlogPosts = catchAsync(async (req: Request, res: Response) => {
-  const result = await BlogService.listBlogPosts();
+  const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
+  const filters = pick(req.query, ['search', 'title', 'content', 'username', 'firstName', 'lastName']);
+
+  const result = await BlogService.listBlogPosts(options, filters);
   sendResponse(res, {
     statusCode: 200,
     success: true,
