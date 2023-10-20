@@ -112,10 +112,37 @@ const deleteService = async (serviceId: string): Promise<IService> => {
   return service;
 };
 
+const deleteMultipleServices = async (serviceIds: string[]) => {
+  const deletedServices = [];
+  const notFoundServices = [];
+
+  for (const serviceId of serviceIds) {
+    try {
+      const service = await prisma.service.delete({
+        where: { id: serviceId },
+      });
+      deletedServices.push(service);
+    } catch (error:any) {
+      // Check for specific error message indicating not found
+      if (error.message.includes('Record to delete does not exist')) {
+        notFoundServices.push(serviceId);
+      } else {
+        // Handle other errors
+        console.error(error);
+      }
+    }
+  }
+
+  return { deletedServices, notFoundServices };
+};
+
+
+
 export const ServiceService = {
   createService,
   getService,
   updateService,
   deleteService,
   listAllServices,
+  deleteMultipleServices
 };

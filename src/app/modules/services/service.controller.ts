@@ -60,8 +60,30 @@ const updateService = catchAsync(async (req: Request, res: Response) => {
 
 const deleteService = catchAsync(async (req: Request, res: Response) => {
   const service = await ServiceService.deleteService(req.params.serviceId);
-  sendResponse(res, { statusCode: 200, success: true, data: service });
+  sendResponse(res, { statusCode: 200, success: true, data: service, message: 'Service deleted successfully!'});
 });
+
+const deleteMultipleServices = catchAsync(async (req: Request, res: Response) => {
+  const { serviceIds } = req.body;
+
+  if (!serviceIds || !Array.isArray(serviceIds) || serviceIds.length === 0) {
+    return sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: 'Invalid serviceIds provided.',
+    });
+  }
+
+  await ServiceService.deleteMultipleServices(serviceIds);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Multiple services deleted successfully.',
+  });
+});
+
+
 
 export const ServiceController = {
   createService,
@@ -69,4 +91,5 @@ export const ServiceController = {
   updateService,
   deleteService,
   listAllServices,
+  deleteMultipleServices
 };

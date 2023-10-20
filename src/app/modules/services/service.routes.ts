@@ -28,6 +28,9 @@ router.put(
 
 router.delete('/:serviceId', ServiceController.deleteService);
 
+router.delete('/delete-multiple', ServiceController.deleteMultipleServices);
+
+
 router.get('/', ServiceController.listAllServices);
 
 export const ServiceRoutes = router;

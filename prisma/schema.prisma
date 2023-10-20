@@ -1,95 +1,93 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
-
 model User {
-    id             String    @id @default(uuid())
-    email          String    @unique
-    password       String    
-    needsPasswordChange Boolean? @default(false)
-    role           UserRole  @default(user)
-    createdAt      DateTime  @default(now())
-    updatedAt DateTime @default(now()) @updatedAt     
-    bookings       Booking[] 
-    reviews        Review[]
-    cartItems      CartItem[]
-    blogPosts  BlogPost[]
-    feedbacks      Feedback[]
-    notifications  Notification[] 
-    profile        Profile?
+    id                  String         @id @default(uuid())
+    email               String         @unique
+    password            String
+    needsPasswordChange Boolean?       @default(false)
+    role                UserRole       @default(user)
+    createdAt           DateTime       @default(now())
+    updatedAt           DateTime       @default(now()) @updatedAt
+    bookings            Booking[]
+    reviews             Review[]
+    cartItems           CartItem[]
+    blogPosts           BlogPost[]
+    feedbacks           Feedback[]
+    notifications       Notification[]
+    profile             Profile?
 }
 
 model Profile {
-    id             String    @id @default(uuid())
-    userId         String    @unique
-    user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-    username       String?    @unique
-    firstName      String?   
-    lastName       String?   
-    dateOfBirth    DateTime?
-    phoneNumber    String?   
-    address        String?  
-    bio            String?  
-    profileImage   String?   
-    createdAt      DateTime  @default(now())
-    updatedAt DateTime @default(now()) @updatedAt 
+    id           String    @id @default(uuid())
+    userId       String    @unique
+    user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    username     String?   @unique
+    firstName    String?
+    lastName     String?
+    dateOfBirth  DateTime?
+    phoneNumber  String?
+    address      String?
+    bio          String?
+    profileImage String?
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @default(now()) @updatedAt
 }
 
-
-
 model Service {
-    id               String          @id @default(uuid())
-    name             String?
-    description      String?
-    pricePerHour     Int
-    brand            String
-    model            String
-    fuelType         String?
-    transmission     String?
-    seatingCapacity  Int
-    categoryId       String
-    createdAt                  DateTime                    @default(now())
-    updatedAt                  DateTime                    @updatedAt
-    images           Image[]
-    category         ServiceCategory @relation(fields: [categoryId], references: [id])
-    reviews          Review[]
-    bookings         Booking[]
-    cartItems        CartItem[]
-    availabilities   Availability[]
+    id              String          @id @default(uuid())
+    name            String?
+    description     String?
+    pricePerHour    Int
+    brand           String
+    model           String
+    fuelType        String?
+    transmission    String?
+    seatingCapacity Int
+    categoryId      String
+    createdAt       DateTime        @default(now())
+    updatedAt       DateTime        @updatedAt
+    category        ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    images          Image[]
+    reviews         Review[]
+    bookings        Booking[]
+    cartItems       CartItem[]
+    availabilities  Availability[]
 }
 
 model Image {
-    id          String   @id @default(uuid())
-    serviceId   String
-    service     Service  @relation(fields: [serviceId], references: [id])
-    filePath    String   // Path to where the image is stored
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    id        String   @id @default(uuid())
+    serviceId String
+    service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+    filePath  String // Path to where the image is stored
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
+
 model ServiceCategory {
-    id       String    @id @default(uuid())
-    name     String
-    services Service[] 
-    createdAt      DateTime  @default(now())
-    updatedAt DateTime @default(now()) @updatedAt 
+    id        String    @id @default(uuid())
+    name      String
+    services  Service[]
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @default(now()) @updatedAt
 }
 
 model Booking {
-    id            String         @id @default(uuid())
+    id            String        @id @default(uuid())
     userId        String
-    user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
     serviceId     String
-    service       Service        @relation(fields: [serviceId], references: [id])
+    service       Service       @relation(fields: [serviceId], references: [id], onDelete: Cascade)
     scheduledDate DateTime
-    status        BookingStatus  @default(pending)
-    createdAt      DateTime  @default(now())
-    updatedAt DateTime @default(now()) @updatedAt 
+    status        BookingStatus @default(pending)
+    createdAt     DateTime      @default(now())
+    updatedAt     DateTime      @default(now()) @updatedAt
 }
 
 model Review {
@@ -97,64 +95,64 @@ model Review {
     userId    String
     user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
     serviceId String
-    service   Service     @relation(fields: [serviceId], references: [id])
+    service   Service     @relation(fields: [serviceId], references: [id], onDelete: Cascade)
     review    String
     rating    RatingValue
-    createdAt      DateTime  @default(now())
-    updatedAt DateTime @default(now()) @updatedAt 
+    createdAt DateTime    @default(now())
+    updatedAt DateTime    @default(now()) @updatedAt
 }
 
 model CartItem {
-    id        String  @id @default(uuid())
+    id        String   @id @default(uuid())
     userId    String
-    user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     serviceId String
-    service   Service @relation(fields: [serviceId], references: [id])
+    service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
     quantity  Int
-    createdAt      DateTime  @default(now())
-    updatedAt DateTime @default(now()) @updatedAt 
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Availability {
-    id         String    @id @default(uuid())
+    id         String   @id @default(uuid())
     serviceId  String
-    service    Service   @relation(fields: [serviceId], references: [id])
+    service    Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
     startDate  DateTime
     endDate    DateTime
     startTime  String
     endTime    String
     daysOfWeek Json
-    createdAt      DateTime  @default(now())
-    updatedAt DateTime @default(now()) @updatedAt 
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now()) @updatedAt
 }
 
-
 model BlogPost {
-    id         String    @id @default(uuid())
-    title      String
-    content    String
-    authorId   String    
-    author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-    createdAt  DateTime  @default(now())
-    updatedAt  DateTime  @updatedAt
+    id        String   @id @default(uuid())
+    title     String
+    content   String
+    authorId  String
+    author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
     @@index([authorId])
 }
 
-
 model Feedback {
-    id         String   @id @default(uuid())
-    userId     String
-    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    content    String
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+    id        String   @id @default(uuid())
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    content   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
+
 model FAQ {
-    id         String    @id @default(uuid())
-    question   String
-    answer     String
-    createdAt  DateTime  @default(now())
-    updatedAt  DateTime  @updatedAt
+    id        String   @id @default(uuid())
+    question  String
+    answer    String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Notification {
@@ -165,7 +163,6 @@ model Notification {
     read      Boolean  @default(false)
     createdAt DateTime @default(now())
 }
-
 
 // enum FuelType {
 //     DIESEL
@@ -192,9 +189,9 @@ enum BookingStatus {
 }
 
 enum RatingValue {
-  ONE
-  TWO
-  THREE
-  FOUR
-  FIVE
+    ONE
+    TWO
+    THREE
+    FOUR
+    FIVE
 }
