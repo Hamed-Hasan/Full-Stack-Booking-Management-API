@@ -152,11 +152,6 @@ Embark on a journey with us to revolutionize the way services are managed, user 
 Explore and test the API endpoints using [Postman](https://documenter.getpostman.com/view/20661145/2s9YXk2g2h)!
 
 
-## 🌐 Entity Relationship Diagram (ERD)
-
-Check out the ERD [here](https://rb.gy/dawzlp) for a visual representation of the database structure.
-
-
 ## Installation
 
 1. Clone the repository.
