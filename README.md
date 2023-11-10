@@ -148,6 +148,8 @@ Embark on a journey with us to revolutionize the way services are managed, user 
 - **Payment Integration:** SSLCommerze - Secure and seamless payment processing for service bookings.
 
 
+Explore and test the API endpoints using [Postman](https://documenter.getpostman.com/view/20661145/2s9YXk2g2h)!
+
 
 ## Installation
 
