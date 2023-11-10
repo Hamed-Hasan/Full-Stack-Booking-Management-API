@@ -10,9 +10,6 @@ Welcome to the Booking Management Backend repository, an unparalleled solution a
 Embark on a journey with us to revolutionize the way services are managed, user roles are defined, and experiences are shared. This powerhouse backend is meticulously engineered to be the bedrock of efficiency, bringing together seamless service booking, comprehensive user role administration, and a vibrant community-driven review ecosystem.
 
 
-![Booking Management ERD](https://i.ibb.co/y4bFjjG/prisma-erd.png)
-
-
 ## Features
 
 - **Role-Based Authentication:** Three user roles - User, Admin, and Super Admin.
