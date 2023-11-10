@@ -147,8 +147,14 @@ Embark on a journey with us to revolutionize the way services are managed, user 
 - **API Documentation:** Swagger/OpenAPI - Clear and interactive API documentation for seamless integration.
 - **Payment Integration:** SSLCommerze - Secure and seamless payment processing for service bookings.
 
+## 🌠 Postman API Documentation
 
 Explore and test the API endpoints using [Postman](https://documenter.getpostman.com/view/20661145/2s9YXk2g2h)!
+
+
+## 🌐 Entity Relationship Diagram (ERD)
+
+Check out the ERD [here](https://t.ly/iUFNz) for a visual representation of the database structure.
 
 
 ## Installation
