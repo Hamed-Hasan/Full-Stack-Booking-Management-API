@@ -35,7 +35,10 @@ export const UserController = {
   }),
 
   updateUser: catchAsync(async (req: Request, res: Response) => {
-    const userData: UserUpdateInput = JSON.parse(req.body.data);
+    // const userData: UserUpdateInput = JSON.parse(req.body.data); // this line for multer
+
+    const userData: UserUpdateInput = req.body.data;
+
     let profileImage;
 
     if (req.file) {

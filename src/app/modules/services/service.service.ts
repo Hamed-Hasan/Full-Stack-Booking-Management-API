@@ -68,8 +68,9 @@ const listAllServices = async (
 };
 
 const createService = async (serviceData: IService): Promise<IService> => {
-  const { images, ...rest } = serviceData;
 
+  // for multer
+  const { images, ...rest } = serviceData;
   const imageCreateInputs =
     images?.map(image => ({
       filePath: image.filePath,
@@ -78,6 +79,7 @@ const createService = async (serviceData: IService): Promise<IService> => {
   const service = await prisma.service.create({
     data: {
       ...rest,
+      // for multer
       images: {
         create: imageCreateInputs,
       },

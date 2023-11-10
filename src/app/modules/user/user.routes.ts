@@ -1,11 +1,11 @@
 import express from 'express';
-import multer from 'multer';
+// import multer from 'multer';
 import { UserController } from './user.controller';
 
 import validateRequest from '../../middlewares/validateRequest';
 import { UpdateUserValidationSchema } from './user.validation';
 
-const upload = multer({ dest: 'uploads/' });
+// const upload = multer({ dest: 'uploads/' });
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.get('/:id', UserController.getUserById);
 
 router.put(
   '/:id',
-  upload.single('file'),
+  // upload.single('file'),
   validateRequest(UpdateUserValidationSchema.updateUserZodSchema),
   UserController.updateUser
 );

@@ -29,7 +29,9 @@ const listAllServices = catchAsync(async (req: Request, res: Response) => {
 });
 
 const createService = catchAsync(async (req, res) => {
-  const serviceData: IService = JSON.parse(req.body.data);
+
+  // const serviceData: IService = JSON.parse(req.body.data); // this line for multer
+  const serviceData: IService = req.body.data;
   const imageFiles = req.files;
 
   if (imageFiles) {
