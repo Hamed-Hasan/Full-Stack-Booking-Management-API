@@ -15,12 +15,7 @@ model User {
     role                UserRole       @default(user)
     createdAt           DateTime       @default(now())
     updatedAt           DateTime       @default(now()) @updatedAt
-    bookings            Booking[]
-    reviews             Review[]
-    cartItems           CartItem[]
-    blogPosts           BlogPost[]
-    feedbacks           Feedback[]
-    notifications       Notification[]
+    
     profile             Profile?
 }
 
@@ -40,141 +35,6 @@ model Profile {
     updatedAt    DateTime  @default(now()) @updatedAt
 }
 
-model Service {
-    id              String          @id @default(uuid())
-    name            String?
-    description     String?
-    pricePerHour    Int
-    brand           String
-    model           String
-    fuelType        String?
-    transmission    String?
-    seatingCapacity Int
-    categoryId      String
-    createdAt       DateTime        @default(now())
-    updatedAt       DateTime        @updatedAt
-    category        ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-    images          Image[]
-    reviews         Review[]
-    bookings        Booking[]
-    cartItems       CartItem[]
-    availabilities  Availability[]
-}
-
-model Image {
-    id        String   @id @default(uuid())
-    serviceId String
-    service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-    filePath  String // Path to where the image is stored
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-model ServiceCategory {
-    id        String    @id @default(uuid())
-    name      String
-    services  Service[]
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @default(now()) @updatedAt
-}
-
-model Booking {
-    id            String        @id @default(uuid())
-    userId        String
-    user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-    serviceId     String
-    service       Service       @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-    scheduledDate DateTime
-    status        BookingStatus @default(pending)
-    createdAt     DateTime      @default(now())
-    updatedAt     DateTime      @default(now()) @updatedAt
-}
-
-model Review {
-    id        String      @id @default(uuid())
-    userId    String
-    user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-    serviceId String
-    service   Service     @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-    review    String
-    rating    RatingValue
-    createdAt DateTime    @default(now())
-    updatedAt DateTime    @default(now()) @updatedAt
-}
-
-model CartItem {
-    id        String   @id @default(uuid())
-    userId    String
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    serviceId String
-    service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-    quantity  Int
-    createdAt DateTime @default(now())
-    updatedAt DateTime @default(now()) @updatedAt
-}
-
-model Availability {
-    id         String   @id @default(uuid())
-    serviceId  String
-    service    Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-    startDate  DateTime
-    endDate    DateTime
-    startTime  String
-    endTime    String
-    daysOfWeek Json
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @default(now()) @updatedAt
-}
-
-model BlogPost {
-    id        String   @id @default(uuid())
-    title     String
-    content   String
-    authorId  String
-    author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@index([authorId])
-}
-
-model Feedback {
-    id        String   @id @default(uuid())
-    userId    String
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    content   String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-model FAQ {
-    id        String   @id @default(uuid())
-    question  String
-    answer    String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-model Notification {
-    id        String   @id @default(uuid())
-    userId    String
-    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    message   String
-    read      Boolean  @default(false)
-    createdAt DateTime @default(now())
-}
-
-// enum FuelType {
-//     DIESEL
-//     PETROL
-//     ELECTRIC
-//     HYBRID
-// }
-
-// enum Transmission {
-//     MANUAL
-//     AUTOMATIC
-// }
 
 enum UserRole {
     user
@@ -182,16 +42,3 @@ enum UserRole {
     superAdmin
 }
 
-enum BookingStatus {
-    pending
-    confirmed
-    cancelled
-}
-
-enum RatingValue {
-    ONE
-    TWO
-    THREE
-    FOUR
-    FIVE
-}
